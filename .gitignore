@@ -1,0 +1,19 @@
+# Helm
+charts/
+*.tgz
+
+# Helmfile
+.helmfile/
+
+# OS
+.DS_Store
+*.swp
+
+# IDE
+.idea/
+.vscode/
+
+# Secrets (never commit)
+*.key
+*.pem
+secrets/

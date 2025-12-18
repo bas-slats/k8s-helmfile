@@ -1,0 +1,22 @@
+# MetalLB configuration
+# L2 mode for bare-metal load balancing
+
+controller:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+speaker:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+  # Tolerate all taints to run on all nodes
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists

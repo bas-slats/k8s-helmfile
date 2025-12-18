@@ -1,0 +1,10 @@
+# ArgoCD - GitOps Continuous Delivery
+# Watches Git repositories and syncs application state
+
+releases:
+  - name: argocd
+    namespace: argocd
+    chart: argo/argo-cd
+    version: 7.7.7
+    values:
+      - ../values/argocd.yaml

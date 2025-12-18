@@ -1,0 +1,10 @@
+# Grafana - Unified Observability UI
+# Pre-configured datasources for Tempo, Pyroscope, Loki, Mimir
+
+releases:
+  - name: grafana
+    namespace: grafana
+    chart: grafana/grafana
+    version: 8.6.4
+    values:
+      - ../values/grafana.yaml

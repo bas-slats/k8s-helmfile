@@ -1,0 +1,10 @@
+# OpenTelemetry Collector
+# Central telemetry pipeline - deployed via OTel Operator CR
+
+releases:
+  - name: otel-collector
+    namespace: otel
+    chart: open-telemetry/opentelemetry-collector
+    version: 0.108.0
+    values:
+      - ../values/otel-collector.yaml

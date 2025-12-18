@@ -1,0 +1,11 @@
+# Linkerd Control Plane - Service Mesh
+# Provides automatic mTLS, traffic observability, and reliability features
+# NOTE: Before install, apply manifests/linkerd-certs.yaml
+
+releases:
+  - name: linkerd-control-plane
+    namespace: linkerd
+    chart: linkerd/linkerd-control-plane
+    version: 1.16.11
+    values:
+      - ../values/linkerd-control-plane.yaml

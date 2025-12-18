@@ -1,0 +1,71 @@
+# HashiCorp Vault configuration
+# Production-ready configuration with Longhorn storage
+
+global:
+  enabled: true
+
+# Disable injector - using External Secrets instead
+injector:
+  enabled: false
+
+server:
+  # Disable dev mode for production
+  dev:
+    enabled: false
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+
+  # Data storage using local-path (k3s default)
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: local-path
+
+  # Standalone mode (single node homelab)
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "file" {
+        path = "/vault/data"
+      }
+
+  # High Availability mode - uncomment for multi-node production
+  # ha:
+  #   enabled: true
+  #   replicas: 3
+  #   raft:
+  #     enabled: true
+  #     setNodeId: true
+  #     config: |
+  #       ui = true
+  #       listener "tcp" {
+  #         tls_disable = 1
+  #         address = "[::]:8200"
+  #         cluster_address = "[::]:8201"
+  #       }
+  #       storage "raft" {
+  #         path = "/vault/data"
+  #       }
+  #       service_registration "kubernetes" {}
+
+  service:
+    enabled: true
+    type: ClusterIP
+    port: 8200
+
+ui:
+  enabled: true
+  serviceType: ClusterIP

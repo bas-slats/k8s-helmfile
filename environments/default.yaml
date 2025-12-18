@@ -1,0 +1,71 @@
+# Default environment configuration
+# Adjust these values for your homelab setup
+
+# Cluster information
+cluster:
+  name: homelab
+  domain: homelab.local
+
+# Network configuration
+network:
+  # MetalLB IP pool - adjust to your LAN subnet
+  loadBalancerRange: "192.168.1.200-192.168.1.220"
+  # Pod CIDR for Cilium
+  podCIDR: "10.42.0.0/16"
+  # Service CIDR
+  serviceCIDR: "10.43.0.0/16"
+
+# Storage configuration
+storage:
+  # Default storage class
+  defaultClass: longhorn
+  # Replica count for Longhorn volumes
+  replicaCount: 2
+
+# Observability endpoints (internal)
+observability:
+  tempo:
+    endpoint: "tempo.tempo.svc.cluster.local:4317"
+  loki:
+    endpoint: "loki.loki.svc.cluster.local:3100"
+  mimir:
+    endpoint: "mimir-nginx.mimir.svc.cluster.local:80"
+  pyroscope:
+    endpoint: "pyroscope.pyroscope.svc.cluster.local:4040"
+
+# Cloudflare configuration
+cloudflare:
+  tunnelName: "homelab-tunnel"
+  # Domain managed in Cloudflare
+  domain: "example.com"
+
+# Resource profiles (adjust based on node capacity)
+resources:
+  # Minimal resources for lightweight components
+  minimal:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+  # Small resources
+  small:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+  # Medium resources
+  medium:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+  # Large resources
+  large:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      memory: 1Gi

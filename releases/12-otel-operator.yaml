@@ -1,0 +1,10 @@
+# OpenTelemetry Operator
+# Manages OTel Collectors and auto-instrumentation
+
+releases:
+  - name: opentelemetry-operator
+    namespace: otel
+    chart: open-telemetry/opentelemetry-operator
+    version: 0.74.0
+    values:
+      - ../values/otel-operator.yaml

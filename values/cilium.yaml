@@ -1,0 +1,49 @@
+# Cilium CNI configuration
+# eBPF-based networking with Hubble observability
+
+# Enable Hubble for network observability
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+
+# Kubernetes integration
+k8sServiceHost: "localhost"
+k8sServicePort: "6443"
+
+# IP Address Management
+ipam:
+  mode: "kubernetes"
+
+# Routing mode
+routingMode: "native"
+
+# Replace kube-proxy
+kubeProxyReplacement: true
+
+# Enable bandwidth manager for better performance
+bandwidthManager:
+  enabled: true
+
+# Enable local redirect policy
+localRedirectPolicy: true
+
+# Operator configuration
+operator:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+# Agent resources
+resources:
+  requests:
+    cpu: 25m
+    memory: 128Mi
+  limits:
+    memory: 512Mi

@@ -1,0 +1,12 @@
+# Cloudflared - Cloudflare Tunnel
+# Creates outbound tunnels for external ingress without opening firewall ports
+# NOTE: Before install, apply manifests/cloudflared-external-secret.yaml
+# and ensure Cloudflare tunnel token is in Vault
+
+releases:
+  - name: cloudflared
+    namespace: cloudflared
+    chart: cloudflare/cloudflare-tunnel
+    version: 0.3.1
+    values:
+      - ../values/cloudflared.yaml

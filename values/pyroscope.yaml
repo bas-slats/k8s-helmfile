@@ -1,0 +1,25 @@
+# Grafana Pyroscope configuration
+# Continuous profiling backend
+
+pyroscope:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 1Gi
+
+# Persistence
+persistence:
+  enabled: true
+  storageClassName: local-path
+  size: 10Gi
+
+# Configuration
+config: |
+  {}
+
+# Service
+service:
+  type: ClusterIP
+  port: 4040

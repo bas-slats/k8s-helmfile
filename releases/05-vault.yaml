@@ -1,0 +1,11 @@
+# HashiCorp Vault - Secrets Management
+# Centralized secrets, dynamic secrets generation, and PKI
+# NOTE: Requires init and unseal after installation
+
+releases:
+  - name: vault
+    namespace: vault
+    chart: hashicorp/vault
+    version: 0.28.1
+    values:
+      - ../values/vault.yaml

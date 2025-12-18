@@ -1,0 +1,10 @@
+# Grafana Tempo - Distributed Tracing Backend
+# Stores traces received from OTel Collector
+
+releases:
+  - name: tempo
+    namespace: tempo
+    chart: grafana/tempo
+    version: 1.10.3
+    values:
+      - ../values/tempo.yaml

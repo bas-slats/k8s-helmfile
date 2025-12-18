@@ -1,0 +1,35 @@
+# ChartMuseum Helm repository configuration
+
+replicaCount: 1
+
+# Storage using Longhorn PVC
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 8Gi
+  storageClass: local-path
+
+# Environment
+env:
+  open:
+    # Disable API for chart uploads (use CI/CD)
+    DISABLE_API: false
+    # Enable Prometheus metrics
+    DISABLE_METRICS: false
+    # Allow chart overwrite
+    ALLOW_OVERWRITE: true
+    # Storage backend
+    STORAGE: local
+    STORAGE_LOCAL_ROOTDIR: /storage
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 128Mi
+
+# Service
+service:
+  type: ClusterIP
+  servicePort: 8080

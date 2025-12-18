@@ -1,0 +1,11 @@
+# cert-manager - Certificate Management
+# Automates certificate issuance and renewal
+# NOTE: After install, apply manifests/cert-manager-issuers.yaml
+
+releases:
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: v1.16.2
+    values:
+      - ../values/cert-manager.yaml

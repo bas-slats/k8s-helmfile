@@ -1,0 +1,10 @@
+# Kured - Kubernetes Reboot Daemon
+# Coordinates node reboots for OS updates
+
+releases:
+  - name: kured
+    namespace: kube-system
+    chart: kubereboot/kured
+    version: 5.5.2
+    values:
+      - ../values/kured.yaml

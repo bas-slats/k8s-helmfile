@@ -1,0 +1,11 @@
+# Linkerd Viz - Observability Dashboard
+# Provides per-route metrics, service topology, and traffic inspection
+# NOTE: Before install, apply manifests/linkerd-viz-certs.yaml
+
+releases:
+  - name: linkerd-viz
+    namespace: linkerd-viz
+    chart: linkerd/linkerd-viz
+    version: 30.12.11
+    values:
+      - ../values/linkerd-viz.yaml

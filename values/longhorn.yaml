@@ -1,0 +1,39 @@
+# Longhorn distributed storage configuration
+
+persistence:
+  defaultClass: true
+  defaultClassReplicaCount: 1  # Single node cluster
+  reclaimPolicy: Delete
+
+defaultSettings:
+  # Backup settings
+  backupTarget: ""
+  backupTargetCredentialSecret: ""
+  # Replica settings - single node cluster
+  defaultReplicaCount: 1
+  # Storage settings
+  storageOverProvisioningPercentage: 100
+  storageMinimalAvailablePercentage: 10
+  # Guaranteed engine manager CPU
+  guaranteedEngineManagerCPU: 12
+  # Guaranteed replica manager CPU
+  guaranteedReplicaManagerCPU: 12
+
+# UI
+longhornUI:
+  replicas: 1
+
+# CSI driver
+csi:
+  attacherReplicaCount: 1
+  provisionerReplicaCount: 1
+  resizerReplicaCount: 1
+  snapshotterReplicaCount: 1
+
+# Resources
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi
+  limits:
+    memory: 256Mi

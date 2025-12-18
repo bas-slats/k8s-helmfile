@@ -1,0 +1,11 @@
+# Cilium - eBPF-based CNI
+# Provides networking, network policies, and observability
+# NOTE: Install k3s with --flannel-backend=none --disable-network-policy
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: cilium/cilium
+    version: 1.16.4
+    values:
+      - ../values/cilium.yaml

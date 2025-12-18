@@ -1,0 +1,10 @@
+# Grafana Pyroscope - Continuous Profiling
+# Stores CPU, memory, and goroutine profiles
+
+releases:
+  - name: pyroscope
+    namespace: pyroscope
+    chart: grafana/pyroscope
+    version: 1.9.1
+    values:
+      - ../values/pyroscope.yaml

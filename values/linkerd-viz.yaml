@@ -1,0 +1,70 @@
+# Linkerd Viz configuration
+# Observability dashboard with external Grafana integration
+
+# Dashboard
+dashboard:
+  replicas: 1
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 50Mi
+      limit: 250Mi
+
+# Metrics API
+metricsAPI:
+  replicas: 1
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 50Mi
+      limit: 250Mi
+
+# Tap component - using cert-manager certificates
+tap:
+  replicas: 1
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 50Mi
+      limit: 250Mi
+  externalSecret: true
+  injectCaFrom: linkerd-viz/tap
+
+# Tap injector
+tapInjector:
+  replicas: 1
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 50Mi
+      limit: 250Mi
+  externalSecret: true
+  injectCaFrom: linkerd-viz/linkerd-tap-injector
+
+# Web component
+web:
+  replicas: 1
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 50Mi
+      limit: 250Mi
+
+# Enable built-in Prometheus for linkerd-viz (simple setup)
+prometheus:
+  enabled: true
+
+# Disable built-in Grafana - use external Grafana
+grafana:
+  enabled: false
+
+# External Grafana URL
+grafanaUrl: "http://grafana.grafana.svc.cluster.local"
+
+# Log level
+defaultLogLevel: info

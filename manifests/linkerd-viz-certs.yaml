@@ -1,0 +1,49 @@
+# Linkerd Viz certificates managed by cert-manager
+---
+# Ensure linkerd-viz namespace exists
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: linkerd-viz
+  labels:
+    linkerd.io/extension: viz
+  annotations:
+    linkerd.io/inject: enabled
+---
+# Tap certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tap
+  namespace: linkerd-viz
+spec:
+  secretName: tap-k8s-tls
+  duration: 24h
+  renewBefore: 1h
+  issuerRef:
+    name: linkerd-identity-issuer
+    kind: ClusterIssuer
+  commonName: tap.linkerd-viz.svc
+  dnsNames:
+    - tap.linkerd-viz.svc
+  usages:
+    - server auth
+---
+# Tap injector certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: linkerd-tap-injector
+  namespace: linkerd-viz
+spec:
+  secretName: tap-injector-k8s-tls
+  duration: 24h
+  renewBefore: 1h
+  issuerRef:
+    name: linkerd-identity-issuer
+    kind: ClusterIssuer
+  commonName: tap-injector.linkerd-viz.svc
+  dnsNames:
+    - tap-injector.linkerd-viz.svc
+  usages:
+    - server auth

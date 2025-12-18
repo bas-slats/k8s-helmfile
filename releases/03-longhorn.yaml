@@ -1,0 +1,10 @@
+# Longhorn - Distributed Block Storage
+# Provides replicated persistent volumes with backup capabilities
+
+releases:
+  - name: longhorn
+    namespace: longhorn-system
+    chart: longhorn/longhorn
+    version: 1.7.2
+    values:
+      - ../values/longhorn.yaml

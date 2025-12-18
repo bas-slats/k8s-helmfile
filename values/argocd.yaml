@@ -1,0 +1,82 @@
+# ArgoCD GitOps configuration
+
+# Global settings
+global:
+  domain: argocd.homelab.local
+
+# Server configuration
+server:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+  # Insecure mode - terminate TLS at ingress/tunnel
+  extraArgs:
+    - --insecure
+
+# Repository server
+repoServer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 512Mi
+
+# Application controller
+controller:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+
+# Redis
+redis:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# Notifications controller
+notifications:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# Application Set controller
+applicationSet:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# Dex (OIDC) - disable if not using SSO
+dex:
+  enabled: false
+
+# Configs
+configs:
+  params:
+    # Application sync options
+    application.instanceLabelKey: argocd.argoproj.io/instance
+  cm:
+    # Enable exec access for debugging
+    exec.enabled: "true"
+    # Admin password - change this!
+    admin.enabled: "true"

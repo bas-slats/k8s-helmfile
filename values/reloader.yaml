@@ -1,0 +1,17 @@
+# Reloader configuration
+# Watches ConfigMaps/Secrets and triggers rolling restarts
+
+reloader:
+  watchGlobally: true
+
+  deployment:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+
+  # Enable Prometheus metrics
+  podMonitor:
+    enabled: true

@@ -1,0 +1,70 @@
+# Linkerd Control Plane configuration
+# Using cert-manager for certificate management
+
+# Identity configuration using cert-manager
+identity:
+  externalCA: true
+  issuer:
+    scheme: kubernetes.io/tls
+
+# Proxy configuration
+proxy:
+  resources:
+    cpu:
+      request: 10m
+    memory:
+      request: 20Mi
+      limit: 250Mi
+
+# Controller resources
+controllerResources:
+  cpu:
+    request: 10m
+  memory:
+    request: 50Mi
+    limit: 250Mi
+
+# Destination service
+destinationResources:
+  cpu:
+    request: 10m
+  memory:
+    request: 50Mi
+    limit: 250Mi
+
+# Identity service
+identityResources:
+  cpu:
+    request: 10m
+  memory:
+    request: 50Mi
+    limit: 250Mi
+
+# Heartbeat
+heartbeatResources:
+  cpu:
+    request: 10m
+  memory:
+    request: 50Mi
+    limit: 250Mi
+
+# Proxy injector - using cert-manager certificates
+proxyInjector:
+  externalSecret: true
+  injectCaFrom: linkerd/linkerd-proxy-injector
+
+# Profile validator
+profileValidator:
+  externalSecret: true
+  injectCaFrom: linkerd/linkerd-sp-validator
+
+# Policy validator
+policyValidator:
+  externalSecret: true
+  injectCaFrom: linkerd/linkerd-policy-validator
+
+# High availability mode - uncomment for production
+# enableHA: true
+
+# Prometheus integration - using Mimir
+# prometheusUrl: "http://mimir-nginx.mimir.svc.cluster.local:80/prometheus"

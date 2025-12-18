@@ -1,0 +1,10 @@
+# ChartMuseum - Helm Chart Repository
+# Self-hosted Helm chart repository for custom charts
+
+releases:
+  - name: chartmuseum
+    namespace: chartmuseum
+    chart: chartmuseum/chartmuseum
+    version: 3.10.3
+    values:
+      - ../values/chartmuseum.yaml

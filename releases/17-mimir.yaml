@@ -1,0 +1,10 @@
+# Grafana Mimir - Metrics Backend
+# Horizontally scalable Prometheus-compatible metrics storage
+
+releases:
+  - name: mimir
+    namespace: mimir
+    chart: grafana/mimir-distributed
+    version: 5.5.1
+    values:
+      - ../values/mimir.yaml

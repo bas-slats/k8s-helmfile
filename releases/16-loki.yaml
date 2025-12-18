@@ -1,0 +1,10 @@
+# Grafana Loki - Log Aggregation
+# Stores logs from OTel Collector
+
+releases:
+  - name: loki
+    namespace: loki
+    chart: grafana/loki
+    version: 6.21.0
+    values:
+      - ../values/loki.yaml

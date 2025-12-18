@@ -1,0 +1,47 @@
+# Kured configuration
+# Kubernetes reboot daemon for OS updates
+
+configuration:
+  # Reboot window - only reboot during these hours
+  startTime: "2:00"
+  endTime: "6:00"
+  # Timezone
+  timeZone: "America/Chicago"
+  # Only reboot on specific days (0=Sun, 1=Mon, etc.)
+  # rebootDays: [1,2,3,4,5]
+  # Slack notifications (optional)
+  # slackHookUrl: ""
+  # slackChannel: ""
+  # Message prefix
+  messageTemplateDrain: "Draining node %s for reboot"
+  messageTemplateReboot: "Rebooting node %s"
+  # Prometheus metrics
+  prometheusUrl: ""
+  # Lock annotation for coordination
+  lockAnnotation: "weave.works/kured-node-lock"
+  # How long to wait for pods to terminate
+  drainGracePeriod: 60
+  # Drain timeout
+  drainTimeout: 0
+  # Skip wait for delete timeout
+  skipWaitForDeleteTimeout: 0
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 64Mi
+
+# Run on all nodes
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+
+# Prometheus metrics
+metrics:
+  create: true

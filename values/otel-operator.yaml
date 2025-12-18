@@ -1,0 +1,14 @@
+# OpenTelemetry Operator configuration
+
+manager:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+
+# Enable cert-manager for webhook certificates
+admissionWebhooks:
+  certManager:
+    enabled: true

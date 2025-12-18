@@ -1,0 +1,140 @@
+# Grafana Mimir configuration
+# Horizontally scalable metrics backend
+
+# Minimal mode for homelab - single instance per component
+mimir:
+  structuredConfig:
+    multitenancy_enabled: false
+
+    server:
+      http_listen_port: 8080
+      grpc_listen_port: 9095
+
+    common:
+      storage:
+        backend: filesystem
+        filesystem:
+          dir: /data/mimir
+
+    blocks_storage:
+      backend: filesystem
+      filesystem:
+        dir: /data/mimir/blocks
+      tsdb:
+        dir: /data/mimir/tsdb
+
+    compactor:
+      data_dir: /data/mimir/compactor
+      sharding_ring:
+        kvstore:
+          store: memberlist
+
+    distributor:
+      ring:
+        kvstore:
+          store: memberlist
+
+    ingester:
+      ring:
+        kvstore:
+          store: memberlist
+        replication_factor: 1
+
+    store_gateway:
+      sharding_ring:
+        replication_factor: 1
+
+    limits:
+      max_global_series_per_user: 0
+      max_global_series_per_metric: 0
+      ingestion_rate: 100000
+      ingestion_burst_size: 200000
+
+# Single replica for homelab
+distributor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 512Mi
+
+ingester:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 1Gi
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 10Gi
+
+querier:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 512Mi
+
+query_frontend:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+
+store_gateway:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 512Mi
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 10Gi
+
+compactor:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      memory: 512Mi
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 10Gi
+
+# NGINX gateway
+nginx:
+  enabled: true
+  replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+# Disable components not needed for single-tenant homelab
+alertmanager:
+  enabled: false
+
+ruler:
+  enabled: false
+
+# Disable minio - using filesystem storage
+minio:
+  enabled: false

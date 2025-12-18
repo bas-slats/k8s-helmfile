@@ -1,0 +1,11 @@
+# MetalLB - Bare-metal LoadBalancer
+# Provides external IPs for services using L2/ARP mode
+# NOTE: After install, apply manifests/metallb-config.yaml manually
+
+releases:
+  - name: metallb
+    namespace: metallb-system
+    chart: metallb/metallb
+    version: 0.14.9
+    values:
+      - ../values/metallb.yaml

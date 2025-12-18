@@ -1,0 +1,10 @@
+# Linkerd CRDs - Custom Resource Definitions
+# Must be installed before Linkerd control plane
+
+releases:
+  - name: linkerd-crds
+    namespace: linkerd
+    chart: linkerd/linkerd-crds
+    version: 1.8.0
+    values:
+      - ../values/linkerd-crds.yaml

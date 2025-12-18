@@ -1,0 +1,21 @@
+# Cloudflare Tunnel configuration
+# Creates outbound tunnels for secure external access
+
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 64Mi
+  limits:
+    memory: 256Mi
+
+# Cloudflare credentials - loaded from external secret
+cloudflare:
+  # Tunnel token from Cloudflare dashboard
+  # Store in Vault and sync via ExternalSecret
+  secretName: cloudflare-tunnel-credentials
+  secretKey: token
+
+# Tunnel configuration - defined in Cloudflare dashboard
+# The token includes the tunnel configuration

@@ -1,0 +1,10 @@
+# Reloader - ConfigMap/Secret Change Detector
+# Triggers rolling restarts when configs change
+
+releases:
+  - name: reloader
+    namespace: reloader
+    chart: stakater/reloader
+    version: 1.2.0
+    values:
+      - ../values/reloader.yaml
