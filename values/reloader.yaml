@@ -12,6 +12,6 @@ reloader:
       limits:
         memory: 128Mi
 
-  # Enable Prometheus metrics
+  # Prometheus metrics - enable after prometheus CRDs are installed
   podMonitor:
-    enabled: true
+    enabled: false

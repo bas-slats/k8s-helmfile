@@ -1,0 +1,23 @@
+# ArgoCD Helmfile Plugin ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-helmfile-plugin
+  namespace: argocd
+data:
+  plugin.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ConfigManagementPlugin
+    metadata:
+      name: helmfile
+    spec:
+      version: v1.0
+      init:
+        command: ["/bin/sh", "-c"]
+        args: ["helmfile repos"]
+      generate:
+        command: ["/bin/sh", "-c"]
+        args: ["helmfile template --include-crds"]
+      discover:
+        find:
+          glob: "**/helmfile.yaml"

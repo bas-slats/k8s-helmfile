@@ -95,13 +95,12 @@ dashboardProviders:
         options:
           path: /var/lib/grafana/dashboards/default
 
-# Pre-installed dashboards
-dashboardsConfigMaps:
-  default: "grafana-dashboards"
+# Pre-installed dashboards - add configmaps as needed
+# dashboardsConfigMaps:
+#   default: "grafana-dashboards"
 
-# Plugins
+# Plugins - pyroscope is now a core plugin in Grafana 11.x
 plugins:
-  - grafana-pyroscope-datasource
   - grafana-lokiexplore-app
 
 # Grafana configuration

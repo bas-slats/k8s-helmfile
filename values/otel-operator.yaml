@@ -1,6 +1,8 @@
 # OpenTelemetry Operator configuration
 
 manager:
+  collectorImage:
+    repository: otel/opentelemetry-collector-contrib
   resources:
     requests:
       cpu: 10m

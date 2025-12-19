@@ -9,26 +9,16 @@ hubble:
   ui:
     enabled: true
 
-# Kubernetes integration
-k8sServiceHost: "localhost"
-k8sServicePort: "6443"
-
 # IP Address Management
 ipam:
   mode: "kubernetes"
 
-# Routing mode
-routingMode: "native"
+# Routing mode - tunnel is simplest for single-node
+routingMode: "tunnel"
+tunnelProtocol: "vxlan"
 
-# Replace kube-proxy
-kubeProxyReplacement: true
-
-# Enable bandwidth manager for better performance
-bandwidthManager:
-  enabled: true
-
-# Enable local redirect policy
-localRedirectPolicy: true
+# Don't replace kube-proxy (simpler config)
+kubeProxyReplacement: false
 
 # Operator configuration
 operator:

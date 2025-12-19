@@ -1,0 +1,45 @@
+# ArgoCD Application for scraper
+# Deploys from ChartMuseum, synced via GitHub Actions
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: scraper
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://charts.slats.dev
+    chart: scraper
+    targetRevision: "*"  # Latest version
+    helm:
+      valueFiles: []
+      values: |
+        # Production values - override as needed
+        replicaCount: 1
+
+        # Use external secrets for sensitive values
+        externalSecrets:
+          enabled: true
+          secretStoreRef:
+            name: vault-backend
+            kind: ClusterSecretStore
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: scraper
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

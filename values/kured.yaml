@@ -42,6 +42,6 @@ tolerations:
     operator: Exists
     effect: NoSchedule
 
-# Prometheus metrics
+# Prometheus metrics - disable ServiceMonitor until CRDs installed
 metrics:
-  create: true
+  create: false

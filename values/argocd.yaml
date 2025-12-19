@@ -2,7 +2,7 @@
 
 # Global settings
 global:
-  domain: argocd.homelab.local
+  domain: argocd.slats.dev
 
 # Server configuration
 server:
@@ -22,10 +22,34 @@ repoServer:
   replicas: 1
   resources:
     requests:
-      cpu: 25m
-      memory: 64Mi
-    limits:
+      cpu: 100m
       memory: 512Mi
+    limits:
+      memory: 2Gi
+  # Helmfile plugin sidecar
+  extraContainers:
+    - name: helmfile
+      image: ghcr.io/helmfile/helmfile:v0.169.2
+      command: ["/var/run/argocd/argocd-cmp-server"]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - name: var-files
+          mountPath: /var/run/argocd
+        - name: plugins
+          mountPath: /home/argocd/cmp-server/plugins
+        - name: cmp-tmp
+          mountPath: /tmp
+        - name: helmfile-plugin
+          mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: plugin.yaml
+  volumes:
+    - name: cmp-tmp
+      emptyDir: {}
+    - name: helmfile-plugin
+      configMap:
+        name: argocd-helmfile-plugin
 
 # Application controller
 controller:
@@ -80,3 +104,7 @@ configs:
     exec.enabled: "true"
     # Admin password - change this!
     admin.enabled: "true"
+    # Helm repositories for chart dependencies
+    helm.repositories: |
+      - name: bitnami
+        url: https://charts.bitnami.com/bitnami

@@ -1,0 +1,11 @@
+# External DNS - Automatic DNS record management
+# Creates DNS records in Cloudflare for tunnel ingress routes
+
+releases:
+  - name: external-dns
+    namespace: external-dns
+    chart: external-dns/external-dns
+    version: 1.19.0
+    values:
+      - ../values/external-dns.yaml
+      - ../values/external-dns-secrets.yaml

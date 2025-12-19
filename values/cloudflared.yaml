@@ -1,5 +1,5 @@
-# Cloudflare Tunnel configuration
-# Creates outbound tunnels for secure external access
+# Cloudflare Tunnel configuration (locally managed)
+# Ingress routes defined here, credentials in cloudflared-secrets.yaml
 
 replicaCount: 1
 
@@ -10,12 +10,16 @@ resources:
   limits:
     memory: 256Mi
 
-# Cloudflare credentials - loaded from external secret
 cloudflare:
-  # Tunnel token from Cloudflare dashboard
-  # Store in Vault and sync via ExternalSecret
-  secretName: cloudflare-tunnel-credentials
-  secretKey: token
-
-# Tunnel configuration - defined in Cloudflare dashboard
-# The token includes the tunnel configuration
+  # Ingress rules - routes traffic from public hostnames to cluster services
+  # See: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress
+  ingress:
+    - hostname: charts.slats.dev
+      service: http://chartmuseum.chartmuseum.svc.cluster.local:8080
+    - hostname: argocd.slats.dev
+      service: https://argocd-server.argocd.svc.cluster.local:443
+      originRequest:
+        noTLSVerify: true
+    # Add more routes here:
+    # - hostname: grafana.slats.dev
+    #   service: http://grafana.grafana.svc.cluster.local:80

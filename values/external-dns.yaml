@@ -1,0 +1,53 @@
+# External DNS configuration
+# Automatically manages DNS records in Cloudflare
+
+# Use Cloudflare as DNS provider
+provider:
+  name: cloudflare
+
+# Only manage records for these domains
+domainFilters:
+  - slats.dev
+
+# Use CRD source for DNSEndpoint resources
+sources:
+  - crd
+
+# Policy: sync will create and delete records
+policy: sync
+
+# Cloudflare-specific settings
+extraArgs:
+  # Use Cloudflare proxy (orange cloud)
+  - --cloudflare-proxied
+  # DNS zone type
+  - --cloudflare-dns-records-per-page=5000
+
+# Shorter sync interval for testing
+interval: 30s
+
+# Debug logging
+logLevel: debug
+
+# Resource limits
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 128Mi
+
+# RBAC for CRD source
+rbac:
+  create: true
+  additionalPermissions:
+    - apiGroups: ["externaldns.k8s.io"]
+      resources: ["dnsendpoints"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: ["externaldns.k8s.io"]
+      resources: ["dnsendpoints/status"]
+      verbs: ["*"]
+
+# Install CRDs for DNSEndpoint
+crd:
+  create: true

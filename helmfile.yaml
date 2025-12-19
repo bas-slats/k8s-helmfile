@@ -50,6 +50,10 @@ repositories:
   - name: cloudflare
     url: https://cloudflare.github.io/helm-charts
 
+  # DNS Management
+  - name: external-dns
+    url: https://kubernetes-sigs.github.io/external-dns/
+
   # Utilities
   - name: stakater
     url: https://stakater.github.io/stakater-charts
@@ -64,14 +68,14 @@ repositories:
 # Load all release files
 helmfiles:
   # Cluster Foundation
-  # NOTE: Cilium requires k3s with --flannel-backend=none
-  # Uncomment when using dedicated k3s cluster
+  # NOTE: Cilium skipped - using k3s default flannel CNI for homelab simplicity
+  # Uncomment for production with proper network setup
   # - path: releases/01-cilium.yaml
-  # NOTE: MetalLB skipped for local Colima - use port-forwarding instead
+  # NOTE: MetalLB skipped - using port-forwarding for local development
   # - path: releases/02-metallb.yaml
 
   # Storage
-  # NOTE: Longhorn skipped for local Colima - using k3s local-path storage
+  # NOTE: Longhorn requires iscsi - using k3s local-path instead
   # - path: releases/03-longhorn.yaml
 
   # Certificate Management (needed before secrets/mesh)
@@ -91,24 +95,21 @@ helmfiles:
   - path: releases/11-linkerd-viz.yaml
 
   # Observability - Operator & Collection
-  # NOTE: Skipped for now - requires additional OTel config
-  # - path: releases/12-otel-operator.yaml
-  # - path: releases/13-otel-collector.yaml
+  - path: releases/12-otel-operator.yaml
+  - path: releases/13-otel-collector.yaml
 
   # Observability - Storage Backends
-  # NOTE: Enable after OTel operator is working
-  # - path: releases/14-tempo.yaml
-  # - path: releases/15-pyroscope.yaml
-  # - path: releases/16-loki.yaml
-  # - path: releases/17-mimir.yaml
+  - path: releases/14-tempo.yaml
+  - path: releases/15-pyroscope.yaml
+  - path: releases/16-loki.yaml
+  - path: releases/17-mimir.yaml
 
   # Observability - UI
-  # NOTE: Enable after backends are working
-  # - path: releases/18-grafana.yaml
+  - path: releases/18-grafana.yaml
 
-  # Ingress
-  # NOTE: Requires Cloudflare tunnel setup
-  # - path: releases/19-cloudflared.yaml
+  # Ingress & DNS
+  - path: releases/19-cloudflared.yaml
+  - path: releases/22-external-dns.yaml
 
   # Utilities
   - path: releases/20-reloader.yaml

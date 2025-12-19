@@ -1,0 +1,29 @@
+# DNS Endpoints for Cloudflare Tunnel
+# These are synced to Cloudflare DNS by external-dns
+# Add new endpoints here when adding ingress rules to cloudflared
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: charts-slats-dev
+  namespace: cloudflared
+spec:
+  endpoints:
+    - dnsName: charts.slats.dev
+      recordTTL: 300
+      recordType: CNAME
+      targets:
+        - c7b598f8-7b88-430f-bc38-1abeb0df4e6b.cfargotunnel.com
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: argocd-slats-dev
+  namespace: cloudflared
+spec:
+  endpoints:
+    - dnsName: argocd.slats.dev
+      recordTTL: 300
+      recordType: CNAME
+      targets:
+        - c7b598f8-7b88-430f-bc38-1abeb0df4e6b.cfargotunnel.com

@@ -17,3 +17,11 @@ charts/
 *.key
 *.pem
 secrets/
+values/*-secrets.yaml
+manifests/*-secret.yaml
+manifests/*-secrets.yaml
+vault-keys.json
+
+# Local environment
+.env
+.env.*

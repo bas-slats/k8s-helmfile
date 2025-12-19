@@ -1,12 +1,12 @@
-# Cloudflared - Cloudflare Tunnel
+# Cloudflared - Cloudflare Tunnel (locally managed)
 # Creates outbound tunnels for external ingress without opening firewall ports
-# NOTE: Before install, apply manifests/cloudflared-external-secret.yaml
-# and ensure Cloudflare tunnel token is in Vault
+# Ingress routes are defined in values/cloudflared.yaml
 
 releases:
   - name: cloudflared
     namespace: cloudflared
     chart: cloudflare/cloudflare-tunnel
-    version: 0.3.1
+    version: 0.3.2
     values:
       - ../values/cloudflared.yaml
+      - ../values/cloudflared-secrets.yaml

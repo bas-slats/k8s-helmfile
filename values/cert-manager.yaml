@@ -5,6 +5,18 @@ installCRDs: true
 
 replicaCount: 1
 
+# Global settings
+global:
+  podSecurityPolicy:
+    enabled: false
+
+# Controller security context
+securityContext:
+  runAsNonRoot: false
+
+containerSecurityContext:
+  runAsNonRoot: false
+
 resources:
   requests:
     cpu: 10m
@@ -14,6 +26,10 @@ resources:
 
 webhook:
   replicaCount: 1
+  securityContext:
+    runAsNonRoot: false
+  containerSecurityContext:
+    runAsNonRoot: false
   resources:
     requests:
       cpu: 10m
@@ -23,6 +39,10 @@ webhook:
 
 cainjector:
   replicaCount: 1
+  securityContext:
+    runAsNonRoot: false
+  containerSecurityContext:
+    runAsNonRoot: false
   resources:
     requests:
       cpu: 10m
@@ -30,8 +50,14 @@ cainjector:
     limits:
       memory: 128Mi
 
-# Prometheus metrics
+startupapicheck:
+  securityContext:
+    runAsNonRoot: false
+  containerSecurityContext:
+    runAsNonRoot: false
+
+# Prometheus metrics - enable after prometheus CRDs are installed
 prometheus:
-  enabled: true
+  enabled: false
   servicemonitor:
-    enabled: true
+    enabled: false
